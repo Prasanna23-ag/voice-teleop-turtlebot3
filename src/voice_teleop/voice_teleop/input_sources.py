@@ -57,7 +57,7 @@ class MicrophoneInputSource:
     below for Vosk - see the comment in _listen_once().
     """
 
-    def __init__(self, energy_threshold=300, pause_threshold=0.6):
+    def __init__(self, energy_threshold=300, pause_threshold=0.6, device_index=None):
         import speech_recognition as sr  # imported here so the base
         # package has zero hard dependency on this library
 
