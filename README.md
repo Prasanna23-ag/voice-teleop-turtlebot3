@@ -1,4 +1,4 @@
-# voice_teleop
+# Voice Teleop
 
 Control a TurtleBot3 in Gazebo (and visualize in RViz2) using simple
 commands: **straight, left, right, back, stop**. Commands are typed today;
