@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 voice_commander_node.py
 
@@ -26,6 +25,7 @@ COMMAND_MAP = {
     "straight": (LINEAR_SPEED, 0.0),
     "forward": (LINEAR_SPEED, 0.0),
     "back": (-LINEAR_SPEED, 0.0),
+    "reverse": (-LINEAR_SPEED, 0.0),
     "backward": (-LINEAR_SPEED, 0.0),
     "left": (0.0, ANGULAR_SPEED),
     "right": (0.0, -ANGULAR_SPEED),
