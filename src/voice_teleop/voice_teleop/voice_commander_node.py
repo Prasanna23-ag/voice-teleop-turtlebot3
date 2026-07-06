@@ -13,7 +13,11 @@ import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import Twist
 
-from voice_teleop.input_sources import TextInputSource
+# from voice_teleop.input_sources import TextInputSource    #for text input source only
+
+from voice_teleop.input_sources import TextInputSource, MicrophoneInputSource     #for mic and text
+
+MIC_DEVICE_INDEX = 1  # check for your device, confirmed via list_microphone_names()
 
 # --- Tuning knobs -----------------------------------------------------
 LINEAR_SPEED = 0.2   # m/s
@@ -25,7 +29,6 @@ COMMAND_MAP = {
     "straight": (LINEAR_SPEED, 0.0),
     "forward": (LINEAR_SPEED, 0.0),
     "back": (-LINEAR_SPEED, 0.0),
-    "reverse": (-LINEAR_SPEED, 0.0),
     "backward": (-LINEAR_SPEED, 0.0),
     "left": (0.0, ANGULAR_SPEED),
     "right": (0.0, -ANGULAR_SPEED),
@@ -42,7 +45,8 @@ class VoiceCommander(Node):
 
         # Swap this for MicrophoneInputSource(...) once your mic is set up -
         # see input_sources.py for instructions.
-        self.input_source = input_source or TextInputSource()
+        # self.input_source = input_source or TextInputSource()        # for keyboard input   
+        self.input_source = input_source or MicrophoneInputSource(device_index=MIC_DEVICE_INDEX)        # for microphone input
 
         self.get_logger().info("Voice Commander node ready.")
 
