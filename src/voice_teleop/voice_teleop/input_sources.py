@@ -40,17 +40,10 @@ class MicrophoneInputSource:
     """
     Live speech-to-text using the `speech_recognition` library.
 
-    This is the drop-in upgrade path for later. It is NOT wired up by
-    default because it needs extra system packages (a working microphone,
-    PortAudio) and a network connection (for the default Google
-    recognizer) or an offline model (Vosk).
-
     To use it:
         1. pip install SpeechRecognition pyaudio
-        2. In voice_commander_node.py, replace:
-               self.input_source = TextInputSource()
-           with:
-               self.input_source = MicrophoneInputSource()
+        2. In voice_commander_node.py, use MicrophoneInputSource() instead
+           of TextInputSource()
 
     For fully offline recognition (recommended for a robotics demo where
     you might not have Wi-Fi near the robot), swap the recognizer call
@@ -65,22 +58,38 @@ class MicrophoneInputSource:
         self.recognizer = sr.Recognizer()
         self.recognizer.energy_threshold = energy_threshold
         self.recognizer.pause_threshold = pause_threshold
-        self.microphone = sr.Microphone(device_index=device_index)        #leave paranthesis empty to use default mic, or specify device_index for a specific mic
+        self.recognizer.dynamic_energy_threshold = False  # lock sensitivity,
+        # don't let it silently drift after every listen() call
 
-        with self.microphone as source:
-            print("Calibrating for ambient noise, please wait...")
-            self.recognizer.adjust_for_ambient_noise(source, duration=1)
+        # If you have multiple audio devices (e.g. a USB mic plus HDMI
+        # audio outputs), pass device_index explicitly so it doesn't
+        # guess wrong. Find the index by running:
+        #   python3 -c "import speech_recognition as sr; [print(i, n) for i, n in enumerate(sr.Microphone.list_microphone_names())]"
+        self.microphone = sr.Microphone(device_index=device_index)
+
+        # Open the audio stream ONCE and keep it open for the life of this
+        # object, instead of reopening it on every listen() call. Some USB
+        # audio devices hang or fail on rapid close/reopen cycles - opening
+        # once avoids that entirely.
+        self._mic_context = self.microphone.__enter__()
+        print("Calibrating for ambient noise, please wait...")
+        self.recognizer.adjust_for_ambient_noise(self._mic_context, duration=1)
         print("Microphone ready. Say a command: straight, left, right, back, stop")
 
     def get_command(self):
         text = self._listen_once()
         if text is None:
-            return ""  # unrecognized speech, let the caller re-prompt
+            return ""  # unrecognized speech or timeout, let the caller re-prompt
         return text.strip().lower()
 
     def _listen_once(self):
-        with self.microphone as source:
-            audio = self.recognizer.listen(source)
+        try:
+            audio = self.recognizer.listen(
+                self._mic_context, timeout=5, phrase_time_limit=5
+            )
+        except self.sr.WaitTimeoutError:
+            print("No speech detected, listening again...")
+            return None
 
         try:
             # Online option (default, quick to set up):
@@ -90,7 +99,6 @@ class MicrophoneInputSource:
             # want no network dependency - requires: pip install vosk
             # and a downloaded Vosk model):
             #
-            # from speech_recognition import UnknownValueError
             # text = self.recognizer.recognize_vosk(audio)
 
             return text
