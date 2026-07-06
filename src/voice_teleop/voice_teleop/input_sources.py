@@ -65,7 +65,7 @@ class MicrophoneInputSource:
         self.recognizer = sr.Recognizer()
         self.recognizer.energy_threshold = energy_threshold
         self.recognizer.pause_threshold = pause_threshold
-        self.microphone = sr.Microphone()
+        self.microphone = sr.Microphone(device_index=device_index)
 
         with self.microphone as source:
             print("Calibrating for ambient noise, please wait...")
