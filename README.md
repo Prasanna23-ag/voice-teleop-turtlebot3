@@ -28,7 +28,7 @@ source ~/.bashrc
 ## 2. Build this package
 
 Copy the `src/voice_teleop` folder into a ROS 2 workspace (or use this
-`voice_teleop_ws` folder as-is) and build:
+`build` folder as-is) and build:
 
 ```bash
 colcon build --packages-select voice_teleop
