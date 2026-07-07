@@ -100,7 +100,7 @@ source install/setup.bash
 ros2 run voice_teleop voice_commander
 ```
 
-You'll see:
+Start typing after you see:
 ```
 Text command mode.
 Type one of: straight, left, right, back, stop
@@ -109,12 +109,12 @@ Type 'quit' to exit.
 >
 ```
 
-Try typing:
+Example command text:
 ```
 left then straight then right
 ```
 
-Watch the robot execute all three moves in Gazebo, each for about a
+Watch the robot execute all three moves in Gazebo, each for about a 
 second, with a short pause between. Type `stop` any time to halt
 immediately and clear anything queued.
 
