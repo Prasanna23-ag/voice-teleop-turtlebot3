@@ -1,3 +1,0 @@
-[console_scripts]
-voice_commander = voice_teleop.voice_commander_node:main
-
