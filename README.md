@@ -199,11 +199,6 @@ and "please" are ignored during parsing.
 
 ## 8. Ideas to extend this for a portfolio piece
 
-- Obstacle-avoidance override using `/scan`, so commands are ignored if
-  they'd drive the robot into a wall
-- Log command history and publish it as a custom message for a small
-  "command dashboard" in RViz
-- A wake word ("hey robot") using `Porcupine` or `openWakeWord` before a
-  command is accepted
-- Package a short demo video/GIF — recruiters weight seeing a working
-  robot much higher than reading a description
+- Obstacle-avoidance override using `/scan`, so commands are ignored if they'd drive the robot into a wall
+- Log command history and publish it as a custom message for a small "command dashboard" in RViz
+- A wake word ("hey robot") using `Porcupine` or `openWakeWord` before a command is accepted
