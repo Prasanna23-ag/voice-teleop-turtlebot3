@@ -19,7 +19,7 @@ Built for **ROS 2 Humble** + **TurtleBot3 Waffle Pi**.
   automatically (no manual accent selection)
 - **Fuzzy command matching**: mispronounced or partially-misheard words
   ("stright", "rite") still resolve correctly via similarity matching
-- **Typed commands work identically to spoken ones** — good for
+- **Typed commands work identically to spoken ones**: good for
   development/demos without a working mic, or quick testing
 - **Auto-stop safety**: each command drives for a fixed duration then
   stops on its own, so the robot never runs away if input stops
@@ -120,7 +120,7 @@ immediately and clear anything queued.
 
 There's also a launch file (`launch/voice_teleop.launch.py`) that starts
 Gazebo, RViz, and the command node together with one `ros2 launch`
-command — note that typed input doesn't reliably reach the node when run
+command, note that typed input doesn't reliably reach the node when run
 this way (a `ros2 launch` managed process doesn't always forward your
 keyboard input correctly), so running Gazebo and the command node in
 **separate terminals**, as shown above, is the more reliable setup.
