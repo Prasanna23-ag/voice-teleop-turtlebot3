@@ -1,7 +1,7 @@
 # Voice Teleop
 
 Control a TurtleBot3 in Gazebo using spoken (or typed) commands: **straight,
-left, right, back, stop** — including full sequences like *"left then
+left, right, back, stop** including full sequences like *"left then
 straight then right"*, recognized across multiple English accents plus
 German out of the box.
 
@@ -11,17 +11,17 @@ Built for **ROS 2 Humble** + **TurtleBot3 Waffle Pi**.
 
 ## Features
 
-- **Sequential commands in one phrase** — say "left then straight then
+- **Sequential commands in one phrase**: say "left then straight then
   right" and the robot queues and executes all three in order
-- **Multi-accent voice recognition** — every phrase is checked against
+- **Multi-accent voice recognition**: every phrase is checked against
   American, British, Indian, and Australian English, plus German, and
   whichever transcription best matches a known command is used
   automatically (no manual accent selection)
-- **Fuzzy command matching** — mispronounced or partially-misheard words
+- **Fuzzy command matching**: mispronounced or partially-misheard words
   ("stright", "rite") still resolve correctly via similarity matching
 - **Typed commands work identically to spoken ones** — good for
   development/demos without a working mic, or quick testing
-- **Auto-stop safety** — each command drives for a fixed duration then
+- **Auto-stop safety**: each command drives for a fixed duration then
   stops on its own, so the robot never runs away if input stops
 
 ## 1. Prerequisites
@@ -66,7 +66,7 @@ pip install SpeechRecognition pyaudio
 
 ## 2. Get the code into a workspace
 
-This repo *is* the ROS 2 package — clone it directly into a workspace's
+This repo *is* the ROS 2 package, clone it directly into a workspace's
 `src/` folder:
 
 ```bash
@@ -85,7 +85,7 @@ source install/setup.bash
 
 ## 4. Run
 
-**Terminal 1 — Gazebo:**
+**Terminal 1: Gazebo:**
 ```bash
 cd ~/voice_teleop_ws
 source install/setup.bash
@@ -93,7 +93,7 @@ source /usr/share/gazebo-11/setup.sh
 ros2 launch turtlebot3_gazebo empty_world.launch.py
 ```
 
-**Terminal 2 — command node** (typed input by default):
+**Terminal 2: command node** (typed input by default):
 ```bash
 cd ~/voice_teleop_ws
 source install/setup.bash
@@ -121,7 +121,7 @@ immediately and clear anything queued.
 There's also a launch file (`launch/voice_teleop.launch.py`) that starts
 Gazebo, RViz, and the command node together with one `ros2 launch`
 command — note that typed input doesn't reliably reach the node when run
-this way (a `ros2 launch`-managed process doesn't always forward your
+this way (a `ros2 launch` managed process doesn't always forward your
 keyboard input correctly), so running Gazebo and the command node in
 **separate terminals**, as shown above, is the more reliable setup.
 
@@ -151,7 +151,7 @@ Microphone ready. Say a command: straight, left, right, back, stop
 (trying accents: en-US, en-GB, en-IN, en-AU, de-DE)
 ```
 
-Speak a command or sequence — recognition checks all configured accents
+Speak a command or sequence recognition checks all configured accents
 per phrase and keeps the best match, so no manual accent selection is
 needed. To add/remove accents, edit `DEFAULT_LANGUAGES` in
 `input_sources.py` (any Google Speech-to-Text locale code works, e.g.
@@ -164,7 +164,7 @@ robot won't have Wi-Fi nearby), see the comment in
 **If a USB microphone stops responding after the first command**: some
 USB audio devices hang when the audio stream is repeatedly opened and
 closed. `MicrophoneInputSource` opens the stream once and keeps it open
-for this reason — if you're modifying this code, avoid re-wrapping each
+for this reason, if you're modifying this code, avoid re-wrapping each
 `listen()` call in its own `with self.microphone as source:` block.
 
 ## 6. Project structure
